@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Vector;
 
+//CTC = "Connection to client"
 public class CTC {
     Vector<String> userList;
     Vector<String> loggedInList;
