@@ -1,8 +1,10 @@
 package Server;
 
+import javax.swing.*;
 import java.util.Hashtable;
 
-public class Server {
-    private Hashtable<String, User> users; //TODO: Make this typed <String, User>
+public class Server extends JFrame {
+    private UserList users;
+
 
 }

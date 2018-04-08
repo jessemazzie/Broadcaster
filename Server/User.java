@@ -1,7 +1,5 @@
 package Server;
 
-import Client.CTC;
-
 import java.util.Vector;
 
 public class User {
