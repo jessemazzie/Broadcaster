@@ -1,7 +1,6 @@
 package Server;
 
 import javax.swing.*;
-import java.util.Hashtable;
 import java.util.Vector;
 
 public class Server extends JFrame {

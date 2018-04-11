@@ -7,8 +7,13 @@ import java.util.Hashtable;
 public class UserList extends Hashtable<String, User> {
     Enumeration<User> users; //What's the point of this?
 
-    public UserList(DataInputStream dis) {
+    public UserList(DataInputStream dis) throws IOException {
+        int numUsers = dis.readInt();
 
+        for(int i = 0; i < numUsers; i++) {
+            User tempUser = new User(dis);
+            put(tempUser.username, tempUser);
+        }
     }
 
     void store() throws IOException {
