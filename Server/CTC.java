@@ -25,19 +25,21 @@ public class CTC implements Runnable {
         String cmd;
         String[] commandParts;
         User user;
+        while(true) {
+            try {
+                cmd = talker.receive();
 
-        try {
-            cmd = talker.receive();
-
-            if(cmd.startsWith("REGISTER")) {
-                commandParts = cmd.split(" ");
-                if(commandParts.length != 3)
-                    System.out.println("Invalid number of parameters passed. Registration failed.");
-                else {
-                    user = new User(commandParts[1], commandParts[2]);
-                    userList.addUser(user);
+                if (cmd.startsWith("REGISTER")) {
+                    commandParts = cmd.split(" ");
+                    if (commandParts.length != 3)
+                        System.out.println("Invalid number of parameters passed. Registration failed.");
+                    else {
+                        user = new User(commandParts[1], commandParts[2]);
+                        userList.addUser(user);
+                    }
                 }
+            } catch (IOException ioe) {
             }
-        } catch (IOException ioe) { }
+        }
     }
 }
