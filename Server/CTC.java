@@ -8,7 +8,7 @@ import java.util.Vector;
 
 //CTC = "Connection to client"
 public class CTC implements Runnable {
-    UserList users;
+    UserList userList;
     Vector<User> loggedInList;
     Talker talker;
 
@@ -34,7 +34,8 @@ public class CTC implements Runnable {
                 if(commandParts.length != 3)
                     System.out.println("Invalid number of parameters passed. Registration failed.");
                 else {
-
+                    user = new User(commandParts[1], commandParts[2]);
+                    userList.addUser(user);
                 }
             }
         } catch (IOException ioe) { }

@@ -16,6 +16,13 @@ public class UserList extends Hashtable<String, User> {
         }
     }
 
+    public void addUser(User user) {
+        put(user.username, user);
+        try {
+            store();
+        } catch(IOException ioe) {}
+    }
+
     void store() throws IOException {
         File file = new File("users.xyz");
         DataOutputStream dos = new DataOutputStream(new FileOutputStream((file)));

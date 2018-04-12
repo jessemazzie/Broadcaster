@@ -11,6 +11,11 @@ public class User {
     Vector<String> friendsList;
     CTC serverConnection;
 
+    User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     User(DataInputStream dis) {
 
     }
