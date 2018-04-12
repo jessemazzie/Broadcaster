@@ -40,7 +40,7 @@ public class Talker {
      */
     public String receive() throws IOException {
         String message;
-        message = reader.readLine();
+        message = reader.readLine(); //Locks here until message is present in the stream.
         System.out.println("Message: " + message + " received by: " + ID);
         return message;
     }

@@ -15,8 +15,6 @@ public class Client extends JFrame {
         //TODO: Construct CTS
         containerPanel = new JPanel(new GridLayout(5, 10));
 
-
-
         cp.add(containerPanel);
         setupMainFrame();
     }
