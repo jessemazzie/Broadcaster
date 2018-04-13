@@ -4,27 +4,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Client extends JFrame implements ActionListener {
     CTS cts;
-    DefaultListModel<String> messageList;
-    JList messageJList;
-    JPanel containerPanel;
     JPanel loginRegisterPanel;
     JTextField usernameField;
     JPasswordField passwordField;
     JButton registerButton;
     JButton loginButton;
-    Container cp;
+
 
     public static void main(String[] args) {
         new Client();
     }
 
     Client() {
+        Container cp;
         cp = getContentPane();
-        cts = new CTS(this);
+        while(cts == null) {
+            try {
+                cts = new CTS(this);
+            } catch (IOException ioe) {
+
+            }
+        }
 
         usernameField = new JTextField();
         usernameField.setSize(25, 1);
@@ -52,18 +57,6 @@ public class Client extends JFrame implements ActionListener {
         loginRegisterPanel.add(loginButton);
         loginRegisterPanel.add(registerButton);
 
-
-        messageList = new DefaultListModel<String>();
-        messageJList = new JList(messageList);
-
-        containerPanel = new JPanel(new BorderLayout());
-        containerPanel.add(messageJList, BorderLayout.CENTER);
-        containerPanel.setVisible(false);
-
-        for(int i = 0; i < 20; i++)
-            messageList.addElement("Test");
-
-        cp.add(containerPanel);
         cp.add(loginRegisterPanel);
         setupMainFrame();
     }
@@ -80,7 +73,7 @@ public class Client extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setTitle("Broadcast receiver.");
+        setTitle("Login/Register");
 
         setVisible(true);
     }
@@ -95,17 +88,26 @@ public class Client extends JFrame implements ActionListener {
         return tempPassword;
     }
 
-    boolean login() {
+    void login() {
         String username = usernameField.getText();
         String password = getPasswordString();
 
-        System.out.println(password);
-
-        return true;
+        try {
+            cts.send("LOGIN " + username + " " + password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    boolean register() {
-        return true;
+    void register() {
+        String username = usernameField.getText();
+        String password = getPasswordString();
+
+        try {
+            cts.send("REGISTER " + username + " " + password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -115,7 +117,7 @@ public class Client extends JFrame implements ActionListener {
         if(cmd.equals("LOGIN")) {
             login();
         } else if(cmd.equals("REGISTER")) {
-            //DO REGISTER SHIT. SIMILAR TO LOGIN SHIT, BUT WITHOUT VALIDATION.
+            register();
         }
     }
 }

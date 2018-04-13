@@ -10,7 +10,6 @@ public class User {
     String password;
     CTC ctc;
     Vector<String> friendsList;
-    CTC serverConnection;
 
     User(String username, String password) {
         this.username = username;
@@ -27,7 +26,7 @@ public class User {
     }
 
     void store(DataOutputStream dos) throws IOException {
-        dos.writeChars(username);
-        dos.writeChars(password);
+        dos.writeUTF(username);
+        dos.writeUTF(password);
     }
 }

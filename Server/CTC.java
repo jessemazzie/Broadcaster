@@ -13,7 +13,7 @@ public class CTC implements Runnable {
 
     public CTC(Socket socket, Server server) throws IOException {
         this.server = server;
-        talker = new Talker(socket, "Server"); //TODO: Assign ID
+        talker = new Talker(socket, "CTC");
         new Thread(this).start();
     }
 
@@ -31,7 +31,8 @@ public class CTC implements Runnable {
                     if (commandParts.length != 3)
                         System.out.println("Invalid number of parameters passed. Registration failed.");
                     else {
-                        user = new User(commandParts[1], commandParts[2]);
+                        System.out.println("Registered new username: " + commandParts[1] + " password: " + commandParts[2]);
+                        user = new User(commandParts[1].trim(), commandParts[2].trim());
                         user.ctc = this;
                         server.addUser(user);
                     }
@@ -40,15 +41,16 @@ public class CTC implements Runnable {
                     if (commandParts.length != 3)
                         System.out.println("Invalid number of parameters passed. Login failed.");
                     else {
-                        user = server.getUser(commandParts[1]);//new User(commandParts[1], commandParts[2]);
+                        user = server.getUser(commandParts[1].trim());//new User(commandParts[1], commandParts[2]);
                         if(user == null)
-                            System.out.println("BAD_USERNAME");
-                        else if(user.password != commandParts[2])
-                            System.out.println("BAD_PASSWORD");
-                        else
-                            System.out.println("LOGGED_IN");
+                            talker.send("BAD_USERNAME");
+                        else if(!user.password.equals(commandParts[2].trim())) {
+                            talker.send("BAD_PASSWORD");
+                        } else {
+                            talker.send("LOGGED_IN");
+                            user.ctc = this;
+                        }
 
-                        user.ctc = this;
                         server.logUserIn(user);
                     }
                 } else if(cmd.startsWith("BROADCAST")) {

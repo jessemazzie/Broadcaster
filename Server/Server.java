@@ -19,10 +19,12 @@ public class Server extends JFrame {
             userFile = new File("users.xyz");
 
             users = new UserList(new DataInputStream(new FileInputStream(userFile)));
+            System.out.println("Users loaded from file.");
         } catch(IOException ioe) {
+            ioe.printStackTrace();
             users = new UserList();
         }
-
+            loggedInUsers = new Vector<User>();
         try {
             serverSocket = new ServerSocket(portNumber);
 
@@ -44,8 +46,8 @@ public class Server extends JFrame {
     }
 
     void addUser(User newUser) {
-        loggedInUsers.add(newUser);
-        users.put(newUser.username, newUser);
+        logUserIn(newUser);
+        users.addUser(newUser);
     }
 
     void logUserIn(User user) {

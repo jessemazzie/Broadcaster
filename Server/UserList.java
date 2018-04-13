@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class UserList extends Hashtable<String, User> {
-    Enumeration<User> users; //What's the point of this?
 
     public UserList(){}
 
@@ -27,8 +26,9 @@ public class UserList extends Hashtable<String, User> {
 
     void store() throws IOException {
         File file = new File("users.xyz");
+        Enumeration<User> users = elements();
         DataOutputStream dos = new DataOutputStream(new FileOutputStream((file)));
-
+        System.out.println("Number of elements" + size());
         dos.writeInt(size());
         while(users.hasMoreElements())
             users.nextElement().store(dos);
