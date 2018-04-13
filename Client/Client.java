@@ -4,25 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class Client extends JFrame implements ActionListener {
+    CTS cts;
+    DefaultListModel<String> messageList;
+    JList messageJList;
+    JPanel containerPanel;
+    JPanel loginRegisterPanel;
+    JTextField usernameField;
+    JPasswordField passwordField;
+    JButton registerButton;
+    JButton loginButton;
+    Container cp;
+
     public static void main(String[] args) {
         new Client();
     }
 
     Client() {
-        DefaultListModel<String> messageList;
-        JList messageJList;
-        JPanel containerPanel;
-        JPanel loginRegisterPanel;
-        JTextField usernameField;
-        JPasswordField passwordField;
-        JButton registerButton;
-        JButton loginButton;
-        Container cp;
-
         cp = getContentPane();
-        //TODO: Construct CTS
+        cts = new CTS(this);
 
         usernameField = new JTextField();
         usernameField.setSize(25, 1);
@@ -57,11 +59,12 @@ public class Client extends JFrame implements ActionListener {
         containerPanel = new JPanel(new BorderLayout());
         containerPanel.add(messageJList, BorderLayout.CENTER);
         containerPanel.setVisible(false);
+
         for(int i = 0; i < 20; i++)
             messageList.addElement("Test");
 
+        cp.add(containerPanel);
         cp.add(loginRegisterPanel);
-        //cp.add(containerPanel);
         setupMainFrame();
     }
 
@@ -82,8 +85,37 @@ public class Client extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    String getPasswordString() {
+        String tempPassword = "";
 
+        for(int i = 0; i < passwordField.getPassword().length; i++) {
+            tempPassword += passwordField.getPassword()[i];
+        }
+
+        return tempPassword;
+    }
+
+    boolean login() {
+        String username = usernameField.getText();
+        String password = getPasswordString();
+
+        System.out.println(password);
+
+        return true;
+    }
+
+    boolean register() {
+        return true;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        String cmd = ae.getActionCommand();
+
+        if(cmd.equals("LOGIN")) {
+            login();
+        } else if(cmd.equals("REGISTER")) {
+            //DO REGISTER SHIT. SIMILAR TO LOGIN SHIT, BUT WITHOUT VALIDATION.
+        }
     }
 }

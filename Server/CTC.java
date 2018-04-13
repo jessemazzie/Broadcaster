@@ -8,18 +8,13 @@ import java.util.Vector;
 
 //CTC = "Connection to client"
 public class CTC implements Runnable {
-    UserList userList;
     Server server;
-    Vector<User> loggedInList;
     Talker talker;
 
     public CTC(Socket socket, Server server) throws IOException {
-//        this.userList = userList;
-//        this.loggedInList = loggedInList;
         this.server = server;
-        talker = new Talker(socket, ""); //TODO: Assign ID
-
-        //Run thread here.
+        talker = new Talker(socket, "Server"); //TODO: Assign ID
+        new Thread(this).start();
     }
 
     @Override
@@ -38,16 +33,23 @@ public class CTC implements Runnable {
                     else {
                         user = new User(commandParts[1], commandParts[2]);
                         user.ctc = this;
-                        userList.addUser(user);
+                        server.addUser(user);
                     }
                 } else if(cmd.startsWith("LOGIN")) {
                     commandParts = cmd.split(" ");
                     if (commandParts.length != 3)
                         System.out.println("Invalid number of parameters passed. Login failed.");
                     else {
-                        user = new User(commandParts[1], commandParts[2]);
+                        user = server.getUser(commandParts[1]);//new User(commandParts[1], commandParts[2]);
+                        if(user == null)
+                            System.out.println("BAD_USERNAME");
+                        else if(user.password != commandParts[2])
+                            System.out.println("BAD_PASSWORD");
+                        else
+                            System.out.println("LOGGED_IN");
+
                         user.ctc = this;
-                        userList.addUser(user);
+                        server.logUserIn(user);
                     }
                 } else if(cmd.startsWith("BROADCAST")) {
                     server.broadcast(cmd.substring(9));

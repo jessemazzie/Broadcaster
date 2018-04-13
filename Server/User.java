@@ -17,8 +17,13 @@ public class User {
         this.password = password;
     }
 
-    User(DataInputStream dis) {
+    User(DataInputStream dis) throws IOException {
+        this.username = dis.readUTF();
+        this.password = dis.readUTF();
+    }
 
+    void broadcastTo(String messageToBroadcast) {
+//        serverConnection.
     }
 
     void store(DataOutputStream dos) throws IOException {

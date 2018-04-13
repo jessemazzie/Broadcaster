@@ -1,9 +1,10 @@
 package Server;
 
 import javax.swing.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Enumeration;
 import java.util.Vector;
 
 public class Server extends JFrame {
@@ -13,6 +14,15 @@ public class Server extends JFrame {
     private Vector<User> loggedInUsers;
 
     Server() {
+        File userFile;
+        try {
+            userFile = new File("users.xyz");
+
+            users = new UserList(new DataInputStream(new FileInputStream(userFile)));
+        } catch(IOException ioe) {
+            users = new UserList();
+        }
+
         try {
             serverSocket = new ServerSocket(portNumber);
 
@@ -33,7 +43,26 @@ public class Server extends JFrame {
         } catch (IOException e) {}
     }
 
-    public void broadcast(String strToBroadcast) {
+    void addUser(User newUser) {
+        loggedInUsers.add(newUser);
+        users.put(newUser.username, newUser);
+    }
 
+    void logUserIn(User user) {
+        loggedInUsers.add(user);
+    }
+
+    User getUser(String username) {
+        return users.get(username);
+    }
+
+    public void broadcast(String strToBroadcast) {
+        Enumeration<User> userEnum;
+
+        userEnum = users.elements();
+
+        while(userEnum.hasMoreElements()) {
+            userEnum.nextElement().broadcastTo(strToBroadcast);
+        }
     }
 }
