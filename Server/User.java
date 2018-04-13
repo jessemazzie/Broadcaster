@@ -8,6 +8,7 @@ import java.util.Vector;
 public class User {
     String username;
     String password;
+    CTC ctc;
     Vector<String> friendsList;
     CTC serverConnection;
 

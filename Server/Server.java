@@ -26,10 +26,14 @@ public class Server extends JFrame {
         Socket tempSocket;
 
         try {
-            tempSocket = serverSocket.accept();
-
-            new CTC(tempSocket, users, loggedInUsers);
-
+            while(true) {
+                tempSocket = serverSocket.accept();
+                new CTC(tempSocket, this);
+            }
         } catch (IOException e) {}
+    }
+
+    public void broadcast(String strToBroadcast) {
+
     }
 }
