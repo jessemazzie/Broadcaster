@@ -28,8 +28,11 @@ public class MessageBox extends JFrame implements ActionListener {
 
         messageList = new DefaultListModel<String>();
         messageJList = new JList(messageList);
+        for(int i = 0; i < 5; i++) {
+            messageList.addElement("SHOW UP ASSHOLE");
+        }
         mainScrollPane = new JScrollPane(messageJList);
-        textField = new JTextField();
+        textField = new JTextField(20);
 
         textFieldContainer = new JPanel(new BorderLayout());
         textFieldContainer.add(textField, BorderLayout.WEST);
@@ -41,6 +44,7 @@ public class MessageBox extends JFrame implements ActionListener {
     }
 
     public void addMessage(String newMessage) {
+        System.out.println("Message being added: " + newMessage);
         messageList.addElement(newMessage);
     }
 

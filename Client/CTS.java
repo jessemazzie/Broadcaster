@@ -28,17 +28,19 @@ public class CTS implements Runnable {
         String msg;
         try {
             while (true) {
-                msg = talker.receive();
-
+                msg = talker.receive().trim();
+                System.out.println("Message in CTC: " + msg);
                 if(msg.equals("LOGGED_IN")) {
                     client.setVisible(false);
-                    new MessageBox(this);
-                } else if(msg.equals("BROADCAST") && messageBox != null) {
-                    messageBox.addMessage(msg.substring(9));
+                    messageBox = new MessageBox(this);
+                } else if(msg.startsWith("BROADCAST")) {
+                    System.out.println(msg);
+                    messageBox.messageList.addElement(msg.substring(9));
+                    messageBox.repaint();
                 }
             }
         } catch(IOException ioe) {
-
+            ioe.printStackTrace();
         }
     }
 }

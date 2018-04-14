@@ -27,7 +27,7 @@ public class Client extends JFrame implements ActionListener {
             try {
                 cts = new CTS(this);
             } catch (IOException ioe) {
-
+                ioe.printStackTrace();
             }
         }
 

@@ -64,7 +64,7 @@ public class Server extends JFrame {
         userEnum = users.elements();
 
         while(userEnum.hasMoreElements()) {
-            userEnum.nextElement().broadcastTo(strToBroadcast);
+            userEnum.nextElement().send(strToBroadcast);
         }
     }
 }

@@ -54,7 +54,8 @@ public class CTC implements Runnable {
                         server.logUserIn(user);
                     }
                 } else if(cmd.startsWith("BROADCAST")) {
-                    server.broadcast(cmd.substring(9));
+                    server.broadcast(cmd);
+                    //talker.send(cmd);
                 }
             } catch (IOException ioe) {}
         }

@@ -21,8 +21,12 @@ public class User {
         this.password = dis.readUTF();
     }
 
-    void broadcastTo(String messageToBroadcast) {
-//        serverConnection.
+    void send(String messageToBroadcast) {
+        try {
+            ctc.talker.send(messageToBroadcast);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void store(DataOutputStream dos) throws IOException {
